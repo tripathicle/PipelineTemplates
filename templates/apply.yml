@@ -24,6 +24,7 @@ parameters:
 stages:
     - stage: templates_init_stage
       displayName: 'Initialize the templates'
+      dependsOn: templates_plan_stage
       jobs:
         - job: templates_init_job
           displayName: 'initialize the templates'
