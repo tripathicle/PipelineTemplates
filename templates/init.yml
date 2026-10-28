@@ -1,21 +1,23 @@
 parameters:
-    - name: WorkingDirectory
-        type: string
-        default: 'WorkingDirectory'
+  - name: WorkingDirectory
+    type: string
+    default: 'WorkingDirectory'
 
-    - name: ServiceConnectionName
-        type: string
-        default: 'ServiceConnectionName'
-    - name: StorageAccountName
-        type: string
-        default: 'StorageAccountName'
-    - name: ContainerName
-        type: string
-        default: 'ContainerName'
-    
-    - name: ContainerKey
-        type: string
-        default: 'ContainerKey'
+  - name: ServiceConnectionName
+    type: string
+    default: 'ServiceConnectionName'
+
+  - name: StorageAccountName
+    type: string
+    default: 'StorageAccountName'
+
+  - name: ContainerName
+    type: string
+    default: 'ContainerName'
+
+  - name: ContainerKey
+    type: string
+    default: 'ContainerKey'
 
 
 
