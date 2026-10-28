@@ -1,65 +1,7 @@
-parameters:
-  - name: WorkingDirectory
-    type: string
-    default: 'WorkingDirectory'
-
-  - name: ServiceConnectionName
-    type: string
-    default: 'ServiceConnectionName'
-
-  - name: StorageAccountName
-    type: string
-    default: 'StorageAccountName'
-
-  - name: ContainerName
-    type: string
-    default: 'ContainerName'
-
-  - name: ContainerKey
-    type: string
-    default: 'ContainerKey'
-
-# Declaration of the stages in the pipeline
-
-stages:
-  - stage: templates_plan_stage
-    displayName: 'Plan the templates'
-    dependsOn: templates_init_stage
-    jobs:
-      - job: templates_plan_job
-        displayName: 'plan the templates'
-        steps:
-          - task: TerraformInstaller@1
-            displayName: 'Install Terraform'
-            inputs:
-              terraformVersion: 'latest'
-
-          - task: TerraformTask@5
-            displayName: 'Terraform Init'
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '${{ parameters.WorkingDirectory }}'
-              backendServiceArm: '${{ parameters.ServiceConnectionName }}'
-              backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
-              backendAzureRmContainerName: '${{ parameters.ContainerName }}'
-              backendAzureRmKey: '${{ parameters.ContainerKey }}'
-
-          - task: TerraformTask@5
-            displayName: 'Terraform Plan'
-            inputs:
-              provider: 'azurerm'
-              command: 'plan'
-              workingDirectory: '${{ parameters.WorkingDirectory }}'
-              environmentServiceNameAzureRM: '${{ parameters.ServiceConnectionName }}'
-
-
-
-
 # parameters:
 #   - name: WorkingDirectory
 #     type: string
-#     default: '$(System.DefaultWorkingDirectory)'
+#     default: 'WorkingDirectory'
 
 #   - name: ServiceConnectionName
 #     type: string
@@ -77,25 +19,20 @@ stages:
 #     type: string
 #     default: 'ContainerKey'
 
+# # Declaration of the stages in the pipeline
+
 # stages:
 #   - stage: templates_plan_stage
-#     displayName: 'Terraform Plan Stage'
+#     displayName: 'Plan the templates'
 #     dependsOn: templates_init_stage
-
 #     jobs:
 #       - job: templates_plan_job
-#         displayName: 'Terraform Plan Job'
-
-#         pool:
-#           name: 'Wardex-pool'
-
+#         displayName: 'plan the templates'
 #         steps:
-#           - checkout: self
-
 #           - task: TerraformInstaller@1
 #             displayName: 'Install Terraform'
 #             inputs:
-#               terraformVersion: '1.17.0'
+#               terraformVersion: 'latest'
 
 #           - task: TerraformTask@5
 #             displayName: 'Terraform Init'
@@ -115,3 +52,66 @@ stages:
 #               command: 'plan'
 #               workingDirectory: '${{ parameters.WorkingDirectory }}'
 #               environmentServiceNameAzureRM: '${{ parameters.ServiceConnectionName }}'
+
+
+
+
+parameters:
+  - name: WorkingDirectory
+    type: string
+    default: '$(System.DefaultWorkingDirectory)'
+
+  - name: ServiceConnectionName
+    type: string
+    default: 'ServiceConnectionName'
+
+  - name: StorageAccountName
+    type: string
+    default: 'StorageAccountName'
+
+  - name: ContainerName
+    type: string
+    default: 'ContainerName'
+
+  - name: ContainerKey
+    type: string
+    default: 'ContainerKey'
+
+stages:
+  - stage: templates_plan_stage
+    displayName: 'Terraform Plan Stage'
+    dependsOn: templates_init_stage
+
+    jobs:
+      - job: templates_plan_job
+        displayName: 'Terraform Plan Job'
+
+        pool:
+          name: 'Wardex-pool'
+
+        steps:
+          - checkout: self
+
+          - task: TerraformInstaller@1
+            displayName: 'Install Terraform'
+            inputs:
+              terraformVersion: '1.17.0'
+
+          - task: TerraformTask@5
+            displayName: 'Terraform Init'
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '${{ parameters.WorkingDirectory }}'
+              backendServiceArm: '${{ parameters.ServiceConnectionName }}'
+              backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
+              backendAzureRmContainerName: '${{ parameters.ContainerName }}'
+              backendAzureRmKey: '${{ parameters.ContainerKey }}'
+
+          - task: TerraformTask@5
+            displayName: 'Terraform Plan'
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '${{ parameters.WorkingDirectory }}'
+              environmentServiceNameAzureRM: '${{ parameters.ServiceConnectionName }}'
