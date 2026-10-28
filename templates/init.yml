@@ -1,55 +1,7 @@
-# parameters:
-#   - name: WorkingDirectory
-#     type: string
-#     default: 'WorkingDirectory'
-
-#   - name: ServiceConnectionName
-#     type: string
-#     default: 'ServiceConnectionName'
-
-#   - name: StorageAccountName
-#     type: string
-#     default: 'StorageAccountName'
-
-#   - name: ContainerName
-#     type: string
-#     default: 'ContainerName'
-
-#   - name: ContainerKey
-#     type: string
-#     default: 'ContainerKey'
-
-# # Declaration of the stages in the pipeline
-
-# stages:
-#   - stage: templates_init_stage
-#     displayName: 'Initialize the templates'
-#     jobs:
-#       - job: templates_init_job
-#         displayName: 'initialize the templates'
-#         steps:
-#           - task: TerraformInstaller@1
-#             inputs:
-#               terraformVersion: 'latest'
-
-#           - task: TerraformTask@5
-#             displayName: 'Initialize the templates'
-#             inputs:
-#               provider: 'azurerm'
-#               command: 'init'
-#               workingDirectory: '${{ parameters.WorkingDirectory }}'
-#               backendServiceArm: '${{ parameters.ServiceConnectionName }}'
-#               backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
-#               backendAzureRmContainerName: '${{ parameters.ContainerName }}'
-#               backendAzureRmKey: '${{ parameters.ContainerKey }}'
-
-
-
-
 parameters:
   - name: WorkingDirectory
     type: string
-    default: '$(System.DefaultWorkingDirectory)'
+    default: 'WorkingDirectory'
 
   - name: ServiceConnectionName
     type: string
@@ -67,27 +19,21 @@ parameters:
     type: string
     default: 'ContainerKey'
 
+# Declaration of the stages in the pipeline
+
 stages:
   - stage: templates_init_stage
-    displayName: 'Terraform Init Stage'
-
+    displayName: 'Initialize the templates'
     jobs:
       - job: templates_init_job
-        displayName: 'Terraform Init Job'
-
-        pool:
-          name: 'Wardex-pool'
-
+        displayName: 'initialize the templates'
         steps:
-          - checkout: self
-
           - task: TerraformInstaller@1
-            displayName: 'Install Terraform'
             inputs:
-              terraformVersion: '1.17.0'
+              terraformVersion: 'latest'
 
           - task: TerraformTask@5
-            displayName: 'Terraform Init'
+            displayName: 'Initialize the templates'
             inputs:
               provider: 'azurerm'
               command: 'init'
@@ -96,3 +42,57 @@ stages:
               backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
               backendAzureRmContainerName: '${{ parameters.ContainerName }}'
               backendAzureRmKey: '${{ parameters.ContainerKey }}'
+
+
+
+
+# parameters:
+#   - name: WorkingDirectory
+#     type: string
+#     default: '$(System.DefaultWorkingDirectory)'
+
+#   - name: ServiceConnectionName
+#     type: string
+#     default: 'ServiceConnectionName'
+
+#   - name: StorageAccountName
+#     type: string
+#     default: 'StorageAccountName'
+
+#   - name: ContainerName
+#     type: string
+#     default: 'ContainerName'
+
+#   - name: ContainerKey
+#     type: string
+#     default: 'ContainerKey'
+
+# stages:
+#   - stage: templates_init_stage
+#     displayName: 'Terraform Init Stage'
+
+#     jobs:
+#       - job: templates_init_job
+#         displayName: 'Terraform Init Job'
+
+#         pool:
+#           name: 'Wardex-pool'
+
+#         steps:
+#           - checkout: self
+
+#           - task: TerraformInstaller@1
+#             displayName: 'Install Terraform'
+#             inputs:
+#               terraformVersion: '1.17.0'
+
+#           - task: TerraformTask@5
+#             displayName: 'Terraform Init'
+#             inputs:
+#               provider: 'azurerm'
+#               command: 'init'
+#               workingDirectory: '${{ parameters.WorkingDirectory }}'
+#               backendServiceArm: '${{ parameters.ServiceConnectionName }}'
+#               backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
+#               backendAzureRmContainerName: '${{ parameters.ContainerName }}'
+#               backendAzureRmKey: '${{ parameters.ContainerKey }}'
