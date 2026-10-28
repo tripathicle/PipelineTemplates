@@ -19,36 +19,32 @@ parameters:
     type: string
     default: 'ContainerKey'
 
-
-
 # Declaration of the stages in the pipeline
 
 stages:
-    - stage: templates_plan_stage
-      displayName: 'Plan the templates'
-      dependsOn: templates_init_stage
-      jobs:
-        - job: templates_plan_job
-          displayName: 'plan the templates'
+  - stage: templates_plan_stage
+    displayName: 'Plan the templates'
+    dependsOn: templates_init_stage
+    jobs:
+      - job: templates_plan_job
+        displayName: 'plan the templates'
+        steps:
+          - task: terraformTaskV5@5
+            displayName: 'Plan the templates'
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '${{ parameters.WorkingDirectory }}'
+              backendServiceArm: '${{ parameters.ServiceConnectionName }}'
+              backendAzureRmResourceGroupName: '${{ parameters.StorageAccountName }}'
+              backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
+              backendAzureRmContainerName: '${{ parameters.ContainerName }}'
+              backendAzureRmKey: '${{ parameters.ContainerKey }}'
 
-          steps:
-            - task: terraformTaskV5@5
-              displayName: 'Plan the templates'
-              inputs:
-                provider: 'azurerm'
-                command: 'init'
-                workingDirectory: '${{ parameters.WorkingDirectory }}'
-                backendServiceArm: '${{ parameters.ServiceConnectionName }}'
-                backendAzureRmResourceGroupName: '${{ parameters.StorageAccountName }}'
-                backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
-                backendAzureRmContainerName: '${{ parameters.ContainerName }}'
-                backendAzureRmKey: '${{ parameters.ContainerKey }}'
-
-
-            -   task: terraformTaskV5@5
-                displayName: 'Plan the templates'
-                inputs:
-                provider: 'azurerm'
-                command: 'plan'
-                workingDirectory: '${{ parameters.WorkingDirectory }}'
-                environmentServiceNameAzureRM: '${{ parameters.ServiceConnectionName }}'
+          - task: terraformTaskV5@5
+            displayName: 'Plan the templates'
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '${{ parameters.WorkingDirectory }}'
+              environmentServiceNameAzureRM: '${{ parameters.ServiceConnectionName }}'
