@@ -28,7 +28,7 @@ stages:
       - job: templates_init_job
         displayName: 'initialize the templates'
         steps:
-          - task: terraformTaskV5@5
+          - task: TerraformTask@5
             displayName: 'Initialize the templates'
             inputs:
               provider: 'azurerm'

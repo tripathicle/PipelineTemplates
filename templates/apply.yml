@@ -29,7 +29,7 @@ stages:
       - job: templates_apply_job
         displayName: 'apply the templates'
         steps:
-          - task: terraformTaskV5@5
+          - task: TerraformTask@5
             displayName: 'Initialize the templates'
             inputs:
               provider: 'azurerm'
@@ -41,7 +41,7 @@ stages:
               backendAzureRmContainerName: '${{ parameters.ContainerName }}'
               backendAzureRmKey: '${{ parameters.ContainerKey }}'
 
-          - task: terraformTaskV5@5
+          - task: TerraformTask@5
             displayName: 'Apply the templates'
             inputs:
               provider: 'azurerm'
