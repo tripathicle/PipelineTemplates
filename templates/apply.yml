@@ -41,7 +41,6 @@ stages:
               command: 'init'
               workingDirectory: '${{ parameters.WorkingDirectory }}'
               backendServiceArm: '${{ parameters.ServiceConnectionName }}'
-              backendAzureRmResourceGroupName: '${{ parameters.StorageAccountName }}'
               backendAzureRmStorageAccountName: '${{ parameters.StorageAccountName }}'
               backendAzureRmContainerName: '${{ parameters.ContainerName }}'
               backendAzureRmKey: '${{ parameters.ContainerKey }}'
