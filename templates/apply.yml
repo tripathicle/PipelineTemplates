@@ -24,12 +24,12 @@ parameters:
 # Declaration of the stages in the pipeline
 
 stages:
-    - stage: templates_init_stage
-      displayName: 'Initialize the templates'
+    - stage: templates_apply_stage
+      displayName: 'Apply the templates'
       dependsOn: templates_plan_stage
       jobs:
-        - job: templates_init_job
-          displayName: 'initialize the templates'
+        - job: templates_apply_job
+          displayName: 'apply the templates'
 
           steps:
             - task: terraformTaskV5@5
@@ -44,9 +44,10 @@ stages:
                 backendAzureRmContainerName: '${{ parameters.ContainerName }}'
                 backendAzureRmKey: '${{ parameters.ContainerKey }}'
 
-            - task: terraformTaskV5@5
-              displayName: 'Apply the templates'
-              inputs:
+
+            -   task: terraformTaskV5@5
+                displayName: 'Apply the templates'
+                inputs:
                 provider: 'azurerm'
                 command: 'apply'
                 workingDirectory: '${{ parameters.WorkingDirectory }}'

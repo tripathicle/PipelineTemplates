@@ -45,9 +45,9 @@ stages:
                 backendAzureRmKey: '${{ parameters.ContainerKey }}'
 
 
-            -  task: terraformTaskV5@5
-              displayName: 'Plan the templates'
-              inputs:
+            -   task: terraformTaskV5@5
+                displayName: 'Plan the templates'
+                inputs:
                 provider: 'azurerm'
                 command: 'plan'
                 workingDirectory: '${{ parameters.WorkingDirectory }}'
