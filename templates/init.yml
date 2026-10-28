@@ -28,6 +28,10 @@ stages:
       - job: templates_init_job
         displayName: 'initialize the templates'
         steps:
+         - task: TerraformInstaller@1
+           inputs:
+             terraformVersion: 'latest'
+
           - task: TerraformTask@5
             displayName: 'Initialize the templates'
             inputs:
