@@ -30,11 +30,12 @@ stages:
         displayName: 'plan the templates'
         steps:
           - task: TerraformInstaller@1
+            displayName: 'Install Terraform'
             inputs:
               terraformVersion: 'latest'
 
           - task: TerraformTask@5
-            displayName: 'Plan the templates'
+            displayName: 'Terraform Init'
             inputs:
               provider: 'azurerm'
               command: 'init'
@@ -46,7 +47,7 @@ stages:
               backendAzureRmKey: '${{ parameters.ContainerKey }}'
 
           - task: TerraformTask@5
-            displayName: 'Plan the templates'
+            displayName: 'Terraform Plan'
             inputs:
               provider: 'azurerm'
               command: 'plan'
